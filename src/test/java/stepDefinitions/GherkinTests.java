@@ -48,7 +48,7 @@ public class GherkinTests {
 
     @When("The user selects Sort by price:high to low from sorting menu")
     public void theUserSelectsSortByPriceHighToLowFromSortingMenu() {
-        homepage.selectDropdownOptions(5);
+        homepage.selectDropdownOptions("Sort by price: high to low");
     }
 
     @And("The user clicks on {string} from navigation menu")
@@ -66,18 +66,18 @@ public class GherkinTests {
 
     @And("The user populates <field> with <value>")
     public void theUserPopulatesFieldWithValue(DataTable dataTable) {
-        List<Map<String, String>> data = dataTable.asMaps(String.class, String.class);
-        for (Map<String, String> row : data) {
-            String firstName = row.get("firstName");
-            String lastName = row.get("lastName");
-            String address = row.get("address");
-            String town = row.get("town");
-            String zip = row.get("zip");
-            String phoneNumber = row.get("phoneNumber");
-            String emailAddress = row.get("emailAddress");
-            checkOutPage = new CheckOutPage(driver);
-            checkOutPage.fillCheckoutPage(firstName, lastName, address, town, zip, phoneNumber, emailAddress);
-        }
+        Map<String, String> data = dataTable.asMaps(String.class, String.class).get(0);
+
+        String firstName = data.get("firstName");
+        String lastName = data.get("lastName");
+        String address = data.get("address");
+        String town = data.get("town");
+        String zip = data.get("zip");
+        String phoneNumber = data.get("phoneNumber");
+        String emailAddress = data.get("emailAddress");
+        checkOutPage = new CheckOutPage(driver);
+        checkOutPage.fillCheckoutPage(firstName, lastName, address, town, zip, phoneNumber, emailAddress);
+
     }
 
     @And("The user clicks on Place order button")
@@ -129,6 +129,11 @@ public class GherkinTests {
 
     @Then("Products should be sorted correctly")
     public void productsShouldBeSortedCorrectly() {
-        homepage.successfullySortedElements();
+        homepage.verifyThatRocketsAreSuccessfullySorted();
+    }
+
+    @When("The user clicks on <rocketName> product`s button")
+    public void theUserClicksOnRocketNameProductSButton(String nameOfRocket) {
+        homepage.getProductByName(nameOfRocket).clickOnButton();
     }
 }

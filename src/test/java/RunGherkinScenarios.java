@@ -6,5 +6,6 @@ import io.cucumber.testng.CucumberOptions;
         features = "src/test/java/featureFile",
         glue = {"stepDefinitions"}
 )
+
 public class RunGherkinScenarios extends AbstractTestNGCucumberTests {
 }

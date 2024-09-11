@@ -54,7 +54,7 @@ public class Homepage extends CommonPage {
         return resultProduct;
     }
 
-    public void selectDropdownOptions(int index) {
+    public void selectDropdownOptions(String optionName) {
         Select sortBy = new Select(sortDropdown);
         assertFalse(sortBy.isMultiple());
         List<WebElement> allMakeOptions = sortBy.getOptions();
@@ -63,17 +63,19 @@ public class Homepage extends CommonPage {
         for (WebElement option : allMakeOptions) {
             actualOptions.add(option.getText());
         }
-        sortBy.selectByIndex(index);
-        WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
+        sortBy.selectByVisibleText(optionName);
     }
 
-    public void successfullySortedElements() {
+    public void verifyThatRocketsAreSuccessfullySorted() {
         List<WebElement> priceElements = webDriver.findElements(By.cssSelector("span.price:not(:has(>del)), span.price ins"));
-        List<Double> prices = priceElements.stream()
-                .map(WebElement::getText)
-                .map(text -> text.replaceAll("[^\\d.]", ""))
-                .map(Double::parseDouble)
-                .collect(Collectors.toList());
+        List<Double> prices = new ArrayList<>();
+        List<Double> originalPrices = new ArrayList<>();
+        for (WebElement element : priceElements) {
+            String text = element.getText().replaceAll("[^\\d.]", "");
+            Double price = Double.parseDouble(text);
+            prices.add(price);
+            originalPrices.add(price);
+        }
         boolean isSorted = true;
         for (int i = 0; i < prices.size() - 1; i++) {
             if (prices.get(i) < prices.get(i + 1)) {
@@ -82,7 +84,7 @@ public class Homepage extends CommonPage {
             }
         }
         assert isSorted : "Prices are not sorted correctly!";
-
     }
+
 }
 
