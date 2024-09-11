@@ -42,7 +42,6 @@ public class CheckOutPage extends CommonPage {
     }
 
     public void loadingIndicator() {
-        performWait();
         webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.blockOverlay")));
         webDriverWait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("div.blockOverlay")));
     }

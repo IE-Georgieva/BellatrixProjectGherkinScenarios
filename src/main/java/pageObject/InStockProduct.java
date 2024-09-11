@@ -3,22 +3,17 @@ package pageObject;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-public class InStockProduct extends PageObject {
+public class InStockProduct extends BaseProduct {
+
+    private WebElement discountPrice = SearchContext.findElement(By.cssSelector("span.price:not(:has(>del)), span.price ins"));
+    private WebElement addToCartButton = SearchContext.findElement(By.cssSelector(".product_type_simple"));
+
     public InStockProduct(WebElement searchContext) {
         super(searchContext);
     }
 
-    private WebElement titleElement = SearchContext.findElement(By.cssSelector("h2.woocommerce-loop-product__title"));
-    private WebElement priceElement = SearchContext.findElement(By.cssSelector(".price"));
-    private WebElement buttonElement = SearchContext.findElement(By.cssSelector(".product_type_simple"));
-    private WebElement pictureElement = SearchContext.findElement(By.cssSelector(".attachment-woocommerce_thumbnail.size-woocommerce_thumbnail"));
-
-    public String getTitle() {
-        return titleElement.getText();
-    }
-
     public void clickOnButton() {
-        buttonElement.click();
+        addToCartButton.click();
 
     }
 

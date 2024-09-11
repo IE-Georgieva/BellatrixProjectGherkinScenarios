@@ -15,13 +15,10 @@ public class CommonPage extends BasePage {
     }
 
     public Header getHeader() {
-        return new Header(header);
 
+        return new Header(header);
     }
 
     protected WebDriverWait webDriverWait;
 
-    public void performWait() {
-        webDriverWait = new WebDriverWait(webDriver, Duration.ofSeconds(15));
-    }
 }

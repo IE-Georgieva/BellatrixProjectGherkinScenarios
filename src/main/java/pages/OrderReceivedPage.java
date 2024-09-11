@@ -14,7 +14,6 @@ public class OrderReceivedPage extends CommonPage {
     }
 
     public void verifyThatOrderIsReceivedSuccessfully(String expectedText, String messageOnFailure) {
-        performWait();
         webDriverWait.until(ExpectedConditions.visibilityOf(orderReceivedText));
         String actualText = orderReceivedText.getText();
         Assert.assertTrue(actualText.contains(expectedText), messageOnFailure);
