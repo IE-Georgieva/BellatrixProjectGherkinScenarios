@@ -5,7 +5,7 @@ import org.openqa.selenium.WebElement;
 
 public class OutOfStockProduct extends BaseProduct {
 
- public OutOfStockProduct(WebElement searchContext) {
+    public OutOfStockProduct(WebElement searchContext) {
         super(searchContext);
     }
 

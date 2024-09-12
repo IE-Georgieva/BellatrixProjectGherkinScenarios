@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import pageObject.InStockProduct;
 
 import java.time.Duration;
@@ -12,8 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.testng.AssertJUnit.assertEquals;
-import static org.testng.AssertJUnit.assertFalse;
+import static org.testng.AssertJUnit.*;
 
 
 public class Homepage extends CommonPage {
@@ -70,20 +70,20 @@ public class Homepage extends CommonPage {
         List<WebElement> priceElements = webDriver.findElements(By.cssSelector("span.price:not(:has(>del)), span.price ins"));
         List<Double> prices = new ArrayList<>();
         List<Double> originalPrices = new ArrayList<>();
+        List<Double> expectedPrices = originalPrices;
         for (WebElement element : priceElements) {
             String text = element.getText().replaceAll("[^\\d.]", "");
             Double price = Double.parseDouble(text);
             prices.add(price);
             originalPrices.add(price);
         }
-        boolean isSorted = true;
-        for (int i = 0; i < prices.size() - 1; i++) {
-            if (prices.get(i) < prices.get(i + 1)) {
-                isSorted = false;
-                break;
-            }
+
+        for (int i = 0; i < originalPrices.size() - 1; i++) {
+            var tempOriginalPrice= prices.get(i);
+            var tempExpectedPrice =expectedPrices.get(i);
+            assertTrue(tempOriginalPrice.equals(tempExpectedPrice));
         }
-        assert isSorted : "Prices are not sorted correctly!";
+
     }
 
 }
